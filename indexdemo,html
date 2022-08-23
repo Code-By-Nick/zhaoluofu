@@ -1,0 +1,56 @@
+<template>
+    <div>
+        <!--导航面包屑-->
+        <el-breadcrumb :separator-icon="ArrowRight">
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>数据统计</el-breadcrumb-item>
+            <el-breadcrumb-item>数据报表</el-breadcrumb-item>
+        </el-breadcrumb>
+
+        <!--表格区域-->
+        <el-card class="box-card">
+            <div id="main" style="width: 750px; height: 500px"></div>
+
+        </el-card>
+    </div>
+</template>
+
+<script>
+    import * as echarts from 'echarts';
+
+
+    export default {
+        name: "my-reports",
+        data(){
+            return{
+
+            }
+        },
+        methods:{
+
+        },
+        mounted() {
+            //获取数据
+            this.axios.get('reports/type/1').then(resp=>{
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main'));
+                // 绘制图表
+                myChart.setOption( resp.data.data );
+
+            })
+
+
+        }
+    }
+</script>
+
+<style scoped>
+    .el-breadcrumb{
+        font-size: 20px;
+    }
+
+    .el-card{
+        margin-top:20px;
+    }
+
+</style>
